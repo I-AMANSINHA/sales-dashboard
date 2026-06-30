@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SERVER = "ubuntu@10.0.15.121"
+        SERVER = "ubuntu@3.239.123.63"
         APP_DIR = "/home/ubuntu/python-app"
         PORT = "5004"
     }
