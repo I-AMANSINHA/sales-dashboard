@@ -18,7 +18,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh """
-                ssh -o StrictHostKeyChecking=no ${SERVER} << 'EOF'
+                ssh ${SERVER} << 'EOF'
 
                 if [ ! -d "${APP_DIR}" ]; then
                     git clone https://github.com/<YOUR_USERNAME>/<YOUR_REPO>.git ${APP_DIR}
