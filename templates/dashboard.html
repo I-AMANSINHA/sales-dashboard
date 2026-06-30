@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Dashboard Metrics</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">Gross Sales: <span id="sales">$0.00</span></div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">Unique Customers: <span id="customers">0</span></div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">Total Orders: <span id="orders">0</span></div>
+        </div>
+    </div>
+</div>
+
+
+<h3 class="mt-4">Recent Transactions</h3>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Customer Name</th>
+            <th>Purchased Product</th>
+            <th>Amount Paid</th>
+        </tr>
+    </thead>
+    <tbody id="order-list">
+        <tr>
+            <td colspan="4" class="text-center text-muted">Loading transactions...</td>
+        </tr>
+    </tbody>
+</table>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
+

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Sales Dashboard</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static',filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<h1>Sales Dashboard</h1>
+
+<div class="cards">
+
+<div class="card">
+<h2>Sales</h2>
+<p id="sales"></p>
+</div>
+
+<div class="card">
+<h2>Customers</h2>
+<p id="customers"></p>
+</div>
+
+<div class="card">
+<h2>Orders</h2>
+<p id="orders"></p>
+</div>
+
+<div class="card">
+<h2>Revenue</h2>
+<p id="revenue"></p>
+</div>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>Customer</th>
+<th>Product</th>
+<th>Amount</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tableData">
+
+</tbody>
+
+</table>
+
+<script src="{{ url_for('static',filename='js/dashboard.js') }}"></script>
+
+</body>
+
+</html>
