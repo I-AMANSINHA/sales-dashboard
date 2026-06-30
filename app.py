@@ -8,7 +8,10 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 
-app = Flask(__name__)
+#from dotenv import load_dotenv
+#load_dotenv()
+
+#app = Flask(__name__)
 
 #app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'random-number123')
 #app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
@@ -16,6 +19,8 @@ app = Flask(__name__)
 #)
 app.config['SECRET_KEY'] = 'random-number123'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://test:python123@localhost:5432/sales'
+#app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
