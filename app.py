@@ -123,32 +123,56 @@ def dashboard_api():
         return jsonify({"error": "Internal Server Error Processing Metrics"}), 500
 
 #
-@app.route('/api/orders', methods=['POST'])
+@app.route('/add-order', methods=['GET', 'POST'])
 @login_required
-def add_order_api():
-    try:
-        data = request.get_json()
-        if not data or not all(k in data for k in ('customer', 'product', 'amount')):
-            return jsonify({"error": "Missing required fields"}), 400
+def add_order_page():
+    if request.method == 'POST':
+        try:
+            # 1. Pull data directly from the standard HTML form fields
+            customer = request.form.get('customer')
+            product = request.form.get('product')
+            amount = request.form.get('amount')
             
-        new_order = Order(
-            customer_name=data['customer'],
-            product_name=data['product'],
-            amount=float(data['amount'])
-        )
-        db.session.add(new_order)
+            # 2. Map and save into your PostgreSQL Order rows
+            new_order = Order(
+                customer_name=customer,
+                product_name=product,
+                amount=float(amount)
+            )
+            db.session.add(new_order)
+            db.session.commit()
+            
+            # 3. Log activity and flash a success alert notice on the dashboard
+            app.logger.info(f"User {current_user.username} successfully added an order via dedicated page.")
+            flash('Transaction logged successfully!', 'success')
+            return redirect(url_for('dashboard_view'))
+            
+        except Exception as e:
+            db.session.rollback()
+            app.logger.error(f"Failed to save order via page view: {str(e)}")
+            flash('Error logging transaction. Please verify input data.', 'danger')
+            
+    return render_template('add_order.html')
+
+
+@app.route('/api/orders/<int:order_id>/delete', methods=['POST'])
+@login_required
+def delete_order_api(order_id):
+    try:
+        order_to_delete = Order.query.get_or_404(order_id)
+        db.session.delete(order_to_delete)
         db.session.commit()
         
-        app.logger.info(f"User {current_user.username} logged a new order worth ${data['amount']}")
-        return jsonify({"message": "Order created successfully!"}), 201
+        app.logger.info(f"User {current_user.username} deleted Order ID #{order_id}")
+        return jsonify({"message": "Order removed successfully"}), 200
     except Exception as e:
         db.session.rollback()
-        app.logger.error(f"Failed to log order: {str(e)}")
-        return jsonify({"error": "Database write failure"}), 500
+        app.logger.error(f"Failed to delete Order ID #{order_id}: {str(e)}")
+        return jsonify({"error": "Database deletion failure"}), 500
+
+
 
 #
-
-
 
 #@app.line_magic # Used for click framework integration
 @app.cli.command("seed-db")

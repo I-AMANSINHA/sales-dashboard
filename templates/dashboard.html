@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <h2>Dashboard Metrics</h2>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+
+    <!-- This neat link button points directly to your new route -->
+    <a href="{{ url_for('add_order_page') }}" class="btn btn-primary w-auto m-0"> Add New Order </a>
+</div>
 
 <div class="row">
     <div class="col-md-4">
@@ -21,7 +28,6 @@
     </div>
 </div>
 
-
 <h3 class="mt-4">Recent Transactions</h3>
 <table class="table table-hover">
     <thead>
@@ -30,6 +36,7 @@
             <th>Customer Name</th>
             <th>Purchased Product</th>
             <th>Amount Paid</th>
+	    <th>Action</th>
         </tr>
     </thead>
     <tbody id="order-list">
